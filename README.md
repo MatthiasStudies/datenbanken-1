@@ -1,0 +1,1 @@
+> Lecture "Datenbanken 1" by Prof. Dr.-Ing. Holger Vogelsang at the [HKA](https://h-ka.de/) 2024/2025
