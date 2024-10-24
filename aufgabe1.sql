@@ -29,7 +29,7 @@ SELECT (SELECT bezeichnung FROM teilestamm WHERE teilestamm.teilnr = lager.teiln
 SELECT DISTINCT teilnr FROM lieferung ORDER BY teilnr DESC;
 
 -- 1.9
-SELECT teilnr AS "Teilnummer", bezeichnung AS "Bezeichnung", preis AS "Bruto-Preis" FROM teilestamm WHERE preis > 30
+SELECT teilnr AS "Teilnummer", bezeichnung AS "Bezeichnung", preis AS "Bruto-Preis" FROM teilestamm WHERE preis > 30;
 
 -- 1.10
 SELECT einzelteilnr, anzahl FROM teilestruktur WHERE oberteilnr = 300001 AND anzahl > 100 AND einheit = 'CM';
