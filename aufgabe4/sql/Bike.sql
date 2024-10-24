@@ -1,14 +1,14 @@
-DROP TABLE teilereservierung;
-DROP TABLE auftragsposten;
-DROP TABLE auftrag;
-DROP TABLE teilestruktur;
-DROP TABLE lager;
-DROP TABLE lieferung;
-DROP TABLE teilestamm;
-DROP TABLE personal;
-DROP TABLE kunde;
-DROP TABLE lieferant;
-DROP TABLE farbe;
+DROP TABLE IF EXISTS teilereservierung;
+DROP TABLE IF EXISTS auftragsposten;
+DROP TABLE IF EXISTS auftrag;
+DROP TABLE IF EXISTS teilestruktur;
+DROP TABLE IF EXISTS lager;
+DROP TABLE IF EXISTS lieferung;
+DROP TABLE IF EXISTS teilestamm;
+DROP TABLE IF EXISTS personal;
+DROP TABLE IF EXISTS kunde;
+DROP TABLE IF EXISTS lieferant;
+DROP TABLE IF EXISTS farbe;
 
 CREATE TABLE lieferant (
      nr          INTEGER    PRIMARY KEY,
