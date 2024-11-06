@@ -1,15 +1,50 @@
-package de.hka.iwii.db1.jdbc;
+package de.hka.iwii.db1.jdbc.formatting;
+
+import de.hka.iwii.db1.jdbc.formatting.options.FmtOptions;
+import de.hka.iwii.db1.jdbc.formatting.options.Where;
 
 import java.sql.*;
 
 public class Formatter {
     private final Connection connection;
 
+
     public Formatter(Connection connection) {
         this.connection = connection;
     }
 
     public static void printResult(ResultSet rs, String title) throws SQLException {
+        printResult(rs, new FmtOptions().withTitle(title));
+    }
+
+    private static boolean printResultLine(ResultSet rs, int[] colSizes, boolean highlight) throws SQLException {
+        boolean anyResults = false;
+        int numColumns = colSizes.length;
+
+        if (highlight) {
+            System.out.print("\u001B[38;5;141m\u001B[48;5;236m");
+        }
+
+        for (int i = 1; i <= numColumns; i++) {
+            anyResults = true;
+            String columnValue = rs.getString(i);
+            int columnSize = colSizes[i - 1];
+            String optPipe = i == numColumns ? "|" : "";
+            System.out.printf("| %-" + columnSize + "s" + optPipe, columnValue);
+        }
+
+        if (highlight) {
+            System.out.print("\033[0m");
+        }
+
+        System.out.println();
+
+        return anyResults;
+    }
+
+    public static void printResult(ResultSet rs, FmtOptions options) throws SQLException {
+        String title = options.getTitle();
+        Where highlightWhere = options.getHighlightWhere();
         ResultSetMetaData meta = rs.getMetaData();
 
         int numColumns = meta.getColumnCount();
@@ -25,8 +60,8 @@ public class Formatter {
 
         if (!title.isEmpty()) {
             printVerticalDivider(colSizes, true);
-            int whitespace = totalWidth - title.length() + meta.getColumnCount() * 2  - 2; // +2 for the two vertical dividers
-            System.out.println("| " + title + " ".repeat(whitespace) + "|");
+            int whitespace = totalWidth - title.length() + meta.getColumnCount() * 2 - 2; // +2 for the two vertical dividers
+            System.out.println("| \u001b[1;141m" + title + "\u001b[0m" + " ".repeat(whitespace) + "|");
         }
 
         printVerticalDivider(colSizes, false);
@@ -52,14 +87,8 @@ public class Formatter {
         boolean anyResults = false;
 
         while (rs.next()) {
-            for (int i = 1; i <= numColumns; i++) {
-                anyResults = true;
-                String columnValue = rs.getString(i);
-                int columnSize = colSizes[i - 1];
-                String optPipe = i == numColumns ? "|" : "";
-                System.out.printf("| %-" + columnSize + "s" + optPipe, columnValue);
-            }
-            System.out.println();
+            boolean highlight = highlightWhere != null && highlightWhere.eval(rs);
+            anyResults |= printResultLine(rs, colSizes, highlight);
         }
 
         if (anyResults) {
@@ -84,14 +113,19 @@ public class Formatter {
         System.out.println();
     }
 
-    public void printTable(String tableName) {
+    public void printTable(String tableName, FmtOptions options) {
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
-            printResult(rs, "Table: " + tableName);
+            printResult(rs, FmtOptions.ifDefined(options)
+                    .withTitle("Table: " + tableName));
         } catch (SQLException e) {
             System.out.println("Error while reading table " + tableName);
             e.printStackTrace();
         }
+    }
+
+    public void printTable(String tableName) {
+        printTable(tableName, null);
     }
 
 }

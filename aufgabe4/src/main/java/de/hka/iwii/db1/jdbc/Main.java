@@ -1,5 +1,9 @@
 package de.hka.iwii.db1.jdbc;
 
+import de.hka.iwii.db1.jdbc.formatting.Formatter;
+import de.hka.iwii.db1.jdbc.formatting.options.FmtOptions;
+import de.hka.iwii.db1.jdbc.formatting.options.Where;
+
 import java.sql.*;
 
 
@@ -124,6 +128,8 @@ public class Main {
         orderPosStmt.setInt(4, count);
         orderPosStmt.setFloat(5, price);
 
+        orderPosStmt.executeUpdate();
+
         return orderRs.getInt(1);
     }
 
@@ -141,9 +147,9 @@ public class Main {
 
             System.out.println("Inserted order with ID: " + orderId);
             var formatter = new Formatter(connection);
-            formatter.printTable("kunde");
-            formatter.printTable("auftrag");
-            formatter.printTable("auftragsposten");
+            formatter.printTable("kunde", FmtOptions.highlightWhereColumn("nr").is(customerId));
+            formatter.printTable("auftrag", FmtOptions.highlightWhereColumn("auftrnr").is(orderId));
+            formatter.printTable("auftragsposten", FmtOptions.highlightWhereColumn("auftrnr").is(orderId));
 
 
         } catch (SQLException e) {
