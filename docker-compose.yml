@@ -9,3 +9,5 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=root
       - POSTGRES_DB=db
+
+    restart: unless-stopped

@@ -37,91 +37,6 @@ public class Main {
 
     }
 
-    private static void printResult(ResultSet rs, String title) throws SQLException {
-        ResultSetMetaData meta = rs.getMetaData();
-
-        int numColumns = meta.getColumnCount();
-        int totalWidth = 0;
-        int[] colSizes = new int[numColumns];
-
-        for (int i = 1; i <= numColumns; i++) {
-            int headerColumnWidth = Math.max(meta.getColumnDisplaySize(i), meta.getColumnTypeName(i).length());
-            // Using max label.length as fallback for short data-value columns
-            colSizes[i - 1] = Math.max(meta.getColumnLabel(i).length(), headerColumnWidth);
-            totalWidth += colSizes[i - 1];
-        }
-
-        if (!title.isEmpty()) {
-            printVerticalDivider(colSizes, true);
-            int whitespace = totalWidth - title.length() + meta.getColumnCount() + 2; // +2 for the two vertical dividers
-            System.out.println("| " + title + " ".repeat(whitespace) + "|");
-        }
-
-        printVerticalDivider(colSizes, false);
-
-        for (int i = 1; i <= numColumns; i++) {
-            String columnName = meta.getColumnName(i);
-            int columnSize = colSizes[i - 1];
-            String optPipe = i == numColumns ? "|" : "";
-            System.out.printf("| %-" + columnSize + "s" + optPipe, columnName);
-        }
-        System.out.println();
-
-        for (int i = 1; i <= numColumns; i++) {
-            String columnType = meta.getColumnTypeName(i);
-            int columnSize = colSizes[i - 1];
-            String optPipe = i == numColumns ? "|" : "";
-            System.out.printf("| %-" + columnSize + "s" + optPipe, columnType);
-        }
-        System.out.println();
-
-        printVerticalDivider(colSizes, false);
-
-        boolean anyResults = false;
-
-        while (rs.next()) {
-            for (int i = 1; i <= numColumns; i++) {
-                anyResults = true;
-                String columnValue = rs.getString(i);
-                int columnSize = colSizes[i - 1];
-                String optPipe = i == numColumns ? "|" : "";
-                System.out.printf("| %-" + columnSize + "s" + optPipe, columnValue);
-            }
-            System.out.println();
-        }
-
-        if (anyResults) {
-            printVerticalDivider(colSizes, false);
-        }
-    }
-
-    private static void printVerticalDivider(int[] colSizes, boolean ignoreColumns) {
-        for (int i = 0; i < colSizes.length; i++) {
-            int columnSize = colSizes[i];
-            String optPlus = i == colSizes.length - 1 ? "" : ignoreColumns ? "--" : "+-";
-
-            if (i == 0) {
-                System.out.print("+");
-                columnSize += 1;
-            }
-            System.out.printf("%-" + columnSize + "s" + optPlus, "-".repeat(columnSize));
-            if (i == colSizes.length - 1) {
-                System.out.print("+");
-            }
-        }
-        System.out.println();
-    }
-
-    private static void printTable(Connection connection, String tableName) {
-        try (Statement stmt = connection.createStatement()) {
-            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
-            printResult(rs, "Table: " + tableName);
-        } catch (SQLException e) {
-            System.out.println("Error while reading table " + tableName);
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Exercise 4.2
      */
@@ -129,7 +44,7 @@ public class Main {
         try (Statement stmt = connection.createStatement()) {
 //             ResultSet rs = stmt.executeQuery("SELECT * FROM personal");
             ResultSet rs = stmt.executeQuery("SELECT persnr, name, ort, aufgabe FROM personal");
-            printResult(rs, "");
+            Formatter.printResult(rs, "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -149,7 +64,7 @@ public class Main {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + customersSearchTerm + "%");
             ResultSet rs = stmt.executeQuery();
-            printResult(rs, "");
+            Formatter.printResult(rs, "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -225,9 +140,10 @@ public class Main {
             int orderId = insertOrder(connection, customerId, staffId, count, price, partNr);
 
             System.out.println("Inserted order with ID: " + orderId);
-            printTable(connection, "kunde");
-            printTable(connection, "auftrag");
-            printTable(connection, "auftragsposten");
+            var formatter = new Formatter(connection);
+            formatter.printTable("kunde");
+            formatter.printTable("auftrag");
+            formatter.printTable("auftragsposten");
 
 
         } catch (SQLException e) {
