@@ -2,7 +2,6 @@ package de.hka.iwii.db1.jdbc;
 
 import de.hka.iwii.db1.jdbc.formatting.Formatter;
 import de.hka.iwii.db1.jdbc.formatting.options.FmtOptions;
-import de.hka.iwii.db1.jdbc.formatting.options.Where;
 
 import java.sql.*;
 
@@ -44,7 +43,7 @@ public class Main {
     /**
      * Exercise 4.2
      */
-    private static void readPersonal(Connection connection) {
+    private static void exercise4_2(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
 //             ResultSet rs = stmt.executeQuery("SELECT * FROM personal");
             ResultSet rs = stmt.executeQuery("SELECT persnr, name, ort, aufgabe FROM personal");
@@ -57,7 +56,7 @@ public class Main {
     /**
      * Exercise 4.3
      */
-    private static void readCustomersVendor(Connection connection, String customersSearchTerm) {
+    private static void exercise4_3(Connection connection, String customersSearchTerm) {
         String sql = "SELECT k.name as kunde, k.nr as knr, lt.name as lieferant, lu.liefnr as lnr FROM kunde k " +
                 "JOIN auftrag a on k.nr = a.kundnr " +
                 "JOIN auftragsposten ap on a.auftrnr = ap.auftrnr " +
@@ -165,6 +164,8 @@ public class Main {
         System.out.println("-- Initialized successfully --\n");
 
 //        readCustomersVendor(conn, "Rafa");
+//        exercise4_2(conn);
+//        exercise4_3(conn, "Rafa");
         exercise4_4(conn);
     }
 }
