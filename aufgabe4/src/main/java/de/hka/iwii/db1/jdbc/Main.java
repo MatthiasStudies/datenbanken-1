@@ -45,9 +45,8 @@ public class Main {
      */
     private static void exercise4_2(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
-//             ResultSet rs = stmt.executeQuery("SELECT * FROM personal");
             ResultSet rs = stmt.executeQuery("SELECT persnr, name, ort, aufgabe FROM personal");
-            Formatter.printResult(rs, "");
+            Formatter.printResult(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +66,7 @@ public class Main {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + customersSearchTerm + "%");
             ResultSet rs = stmt.executeQuery();
-            Formatter.printResult(rs, "");
+            Formatter.printResult(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -163,9 +162,8 @@ public class Main {
         jdbcBikeShop.reInitializeDB(conn);
         System.out.println("-- Initialized successfully --\n");
 
-//        readCustomersVendor(conn, "Rafa");
-//        exercise4_2(conn);
+        exercise4_2(conn);
 //        exercise4_3(conn, "Rafa");
-        exercise4_4(conn);
+//        exercise4_4(conn);
     }
 }
