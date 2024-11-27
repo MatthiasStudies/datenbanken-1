@@ -2,6 +2,7 @@ package de.hka.iwii.db1.jdbc;
 
 import de.hka.iwii.db1.jdbc.formatting.Formatter;
 import de.hka.iwii.db1.jdbc.formatting.options.FmtOptions;
+import de.hka.iwii.db1.jdbc.formatting.options.Where;
 
 import java.sql.*;
 
@@ -145,9 +146,9 @@ public class Main {
 
             System.out.println("Inserted order with ID: " + orderId);
             var formatter = new Formatter(connection);
-            formatter.printTable("kunde", FmtOptions.highlightWhereColumn("nr").is(customerId));
-            formatter.printTable("auftrag", FmtOptions.highlightWhereColumn("auftrnr").is(orderId));
-            formatter.printTable("auftragsposten", FmtOptions.highlightWhereColumn("auftrnr").is(orderId));
+            formatter.printTable("kunde", FmtOptions.highlight(Where.column("nr").is(customerId)));
+            formatter.printTable("auftrag", FmtOptions.highlight(Where.column("auftrnr").is(orderId)));
+            formatter.printTable("auftragsposten", FmtOptions.highlight(Where.column("auftrnr").is(orderId)));
 
 
         } catch (SQLException e) {
@@ -162,8 +163,8 @@ public class Main {
         jdbcBikeShop.reInitializeDB(conn);
         System.out.println("-- Initialized successfully --\n");
 
-        exercise4_2(conn);
+//        exercise4_2(conn);
 //        exercise4_3(conn, "Rafa");
-//        exercise4_4(conn);
+        exercise4_4(conn);
     }
 }
