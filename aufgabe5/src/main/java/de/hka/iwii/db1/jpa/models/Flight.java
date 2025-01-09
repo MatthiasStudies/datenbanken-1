@@ -18,4 +18,28 @@ public class Flight {
     String startAirport;
 
     public Flight() {}
+
+    public String getNr() {
+        return nr;
+    }
+
+    public void setNr(String nr) {
+        this.nr = nr;
+    }
+
+    public LocalDateTime getTakeOff() {
+        return takeOff;
+    }
+
+    public void setTakeOff(LocalDateTime takeOff) {
+        this.takeOff = takeOff;
+    }
+
+    public String getStartAirport() {
+        return startAirport;
+    }
+
+    public void setStartAirport(String startAirport) {
+        this.startAirport = startAirport;
+    }
 }

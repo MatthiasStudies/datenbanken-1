@@ -23,5 +23,44 @@ public class Booking {
     @ManyToOne
     Customer customer;
 
+    @ManyToOne
+    Flight flight;
+
     public Booking() {}
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
+    public String format() {
+        return String.format("Booking %d: %s, %d booked seats, name: %s %s, flight: %s from %s at %s", id, date, count, customer.getFirstName(), customer.getLastName(), flight.getNr(), flight.getStartAirport(), flight.getTakeOff());
+    }
 }
