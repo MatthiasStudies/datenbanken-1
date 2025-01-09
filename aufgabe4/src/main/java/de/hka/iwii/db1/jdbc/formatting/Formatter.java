@@ -13,6 +13,10 @@ public class Formatter {
         this.connection = connection;
     }
 
+    public static void printResult(ResultSet rs) throws SQLException {
+        printResult(rs, "");
+    }
+
     public static void printResult(ResultSet rs, String title) throws SQLException {
         printResult(rs, new FmtOptions().withTitle(title));
     }

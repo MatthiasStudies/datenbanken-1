@@ -2,6 +2,7 @@ package de.hka.iwii.db1.jdbc;
 
 import de.hka.iwii.db1.jdbc.formatting.Formatter;
 import de.hka.iwii.db1.jdbc.formatting.options.FmtOptions;
+import de.hka.iwii.db1.jdbc.formatting.options.Where;
 
 import java.sql.*;
 
@@ -45,9 +46,8 @@ public class Main {
      */
     private static void exercise4_2(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
-//             ResultSet rs = stmt.executeQuery("SELECT * FROM personal");
             ResultSet rs = stmt.executeQuery("SELECT persnr, name, ort, aufgabe FROM personal");
-            Formatter.printResult(rs, "");
+            Formatter.printResult(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class Main {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + customersSearchTerm + "%");
             ResultSet rs = stmt.executeQuery();
-            Formatter.printResult(rs, "");
+            Formatter.printResult(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -146,9 +146,9 @@ public class Main {
 
             System.out.println("Inserted order with ID: " + orderId);
             var formatter = new Formatter(connection);
-            formatter.printTable("kunde", FmtOptions.highlightWhereColumn("nr").is(customerId));
-            formatter.printTable("auftrag", FmtOptions.highlightWhereColumn("auftrnr").is(orderId));
-            formatter.printTable("auftragsposten", FmtOptions.highlightWhereColumn("auftrnr").is(orderId));
+            formatter.printTable("kunde", FmtOptions.highlight(Where.column("nr").is(customerId)));
+            formatter.printTable("auftrag", FmtOptions.highlight(Where.column("auftrnr").is(orderId)));
+            formatter.printTable("auftragsposten", FmtOptions.highlight(Where.column("auftrnr").is(orderId)));
 
 
         } catch (SQLException e) {
@@ -163,7 +163,6 @@ public class Main {
         jdbcBikeShop.reInitializeDB(conn);
         System.out.println("-- Initialized successfully --\n");
 
-//        readCustomersVendor(conn, "Rafa");
 //        exercise4_2(conn);
 //        exercise4_3(conn, "Rafa");
         exercise4_4(conn);

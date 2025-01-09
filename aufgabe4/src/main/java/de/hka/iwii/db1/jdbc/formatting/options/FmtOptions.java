@@ -1,7 +1,7 @@
 package de.hka.iwii.db1.jdbc.formatting.options;
 
 public class FmtOptions {
-    private Where highlightWhere;
+    private final Where highlightWhere;
     private String title;
 
     public FmtOptions(Where highlightWhere) {
@@ -19,13 +19,8 @@ public class FmtOptions {
         return this;
     }
 
-    public static FmtOptions highlightWhereColumn(String column) {
-        return new FmtOptions(Where.column(column));
-    }
-
-    public FmtOptions is(Object value) {
-        this.highlightWhere = highlightWhere.is(value);
-        return this;
+    public static FmtOptions highlight(Where where) {
+        return new FmtOptions(where);
     }
 
     public Where getHighlightWhere() {
