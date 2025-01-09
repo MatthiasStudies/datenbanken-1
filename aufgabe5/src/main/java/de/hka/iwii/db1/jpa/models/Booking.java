@@ -1,9 +1,6 @@
 package de.hka.iwii.db1.jpa.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,9 +12,9 @@ public class Booking {
     Long id;
 
     @Min(1)
-    int count;
+    int numberOfSeats;
 
-    @NotNull
+    @NotNull  @Temporal(TemporalType.TIME)
     LocalDateTime date;
 
     @ManyToOne
@@ -28,12 +25,12 @@ public class Booking {
 
     public Booking() {}
 
-    public int getCount() {
-        return count;
+    public int getNumberOfSeats() {
+        return numberOfSeats;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setNumberOfSeats(int count) {
+        this.numberOfSeats = count;
     }
 
     public LocalDateTime getDate() {
@@ -61,6 +58,6 @@ public class Booking {
     }
 
     public String format() {
-        return String.format("Booking %d: %s, %d booked seats, name: %s %s, flight: %s from %s at %s", id, date, count, customer.getFirstName(), customer.getLastName(), flight.getNr(), flight.getStartAirport(), flight.getTakeOff());
+        return String.format("Booking %d: %s, %d booked seats, name: %s %s, flight: %s from %s at %s", id, date, numberOfSeats, customer.getFirstName(), customer.getLastName(), flight.getNr(), flight.getStartAirport(), flight.getTakeOff());
     }
 }

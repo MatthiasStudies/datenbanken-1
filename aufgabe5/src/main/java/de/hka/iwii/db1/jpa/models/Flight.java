@@ -2,6 +2,8 @@ package de.hka.iwii.db1.jpa.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -11,7 +13,7 @@ public class Flight {
     @Id @NotNull
     String nr;
 
-    @NotNull
+    @NotNull @Temporal(TemporalType.TIME)
     LocalDateTime takeOff;
 
     @NotNull

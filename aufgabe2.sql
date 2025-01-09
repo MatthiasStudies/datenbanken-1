@@ -42,8 +42,20 @@ SELECT name, sum(ap.gesamtpreis) FROM kunde k
 WITH kundeByUmsatz AS (SELECT name, sum(ap.gesamtpreis) AS umsatz FROM kunde k
     JOIN auftrag a on k.nr = a.kundnr
     JOIN auftragsposten ap on a.auftrnr = ap.auftrnr
-      GROUP BY k.nr)  SELECT name, umsatz FROM kundeByUmsatz WHERE umsatz = (SELECT max(umsatz) FROM kundeByUmsatz);
+      GROUP BY k.nr)  SELECT name, umsatz FROM kundeByUmsatz ORDER BY umsatz DESC LIMIT 1;
 
+-- --2.9
+-- with temptable (kundnr,summe) as (
+--     select auftrag.kundnr, sum(auftragsposten.gesamtpreis)
+--     from auftragsposten
+--              join auftrag on auftrag.auftrnr = auftragsposten.auftrnr
+--     group by kundnr
+-- )
+-- select kunde.name, temptable.summe
+-- from kunde
+--          join temptable on kunde.nr = temptable.kundnr
+-- order by summe desc
+--     fetch first row only;
 
 -- 2.10
 CREATE VIEW KundenUmsatz AS

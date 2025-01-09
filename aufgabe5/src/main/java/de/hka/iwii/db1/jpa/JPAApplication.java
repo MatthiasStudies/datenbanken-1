@@ -55,25 +55,25 @@ public class JPAApplication {
 			entityManager.persist(flight3);
 
 			Booking booking1customer1 = new Booking();
-			booking1customer1.setCount(2);
+			booking1customer1.setNumberOfSeats(2);
 			booking1customer1.setDate(java.time.LocalDateTime.now());
 			booking1customer1.setCustomer(customer1);
 			booking1customer1.setFlight(flight1);
 
 			Booking booking2customer1= new Booking();
-			booking2customer1.setCount(2);
+			booking2customer1.setNumberOfSeats(2);
 			booking2customer1.setDate(java.time.LocalDateTime.now());
 			booking2customer1.setCustomer(customer1);
 			booking2customer1.setFlight(flight2);
 
 			Booking booking1customer2 = new Booking();
-			booking1customer2.setCount(2);
+			booking1customer2.setNumberOfSeats(2);
 			booking1customer2.setDate(java.time.LocalDateTime.now());
 			booking1customer2.setCustomer(customer2);
 			booking1customer2.setFlight(flight2);
 
 			Booking booking2customer2 = new Booking();
-			booking2customer2.setCount(2);
+			booking2customer2.setNumberOfSeats(2);
 			booking2customer2.setDate(java.time.LocalDateTime.now());
 			booking2customer2.setCustomer(customer2);
 			booking2customer2.setFlight(flight3);

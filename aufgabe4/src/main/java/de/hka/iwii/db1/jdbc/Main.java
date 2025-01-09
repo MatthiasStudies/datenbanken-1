@@ -164,7 +164,7 @@ public class Main {
         System.out.println("-- Initialized successfully --\n");
 
 //        exercise4_2(conn);
-//        exercise4_3(conn, "Rafa");
-        exercise4_4(conn);
+        exercise4_3(conn, "Rafa");
+//        exercise4_4(conn);
     }
 }

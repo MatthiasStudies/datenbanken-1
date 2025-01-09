@@ -19,7 +19,7 @@ SELECT min(datum) as "von", max(datum) as "bis" FROM auftrag;
 SELECT * FROM auftrag WHERE auftrnr = 2;
 SELECT * FROM kunde WHERE  nr = 3;
 SELECT * FROM personal WHERE persnr = 5;
-SELECT * FROM personal WHERE persnr = 1; --Vorgestzter
+SELECT * FROM personal WHERE persnr = 1; --Vorgesetzter
 
 -- 1.7
 SELECT (SELECT bezeichnung FROM teilestamm WHERE teilestamm.teilnr = lager.teilnr), bestand  FROM lager WHERE bestand >= 1 ORDER BY bestand ASC;
