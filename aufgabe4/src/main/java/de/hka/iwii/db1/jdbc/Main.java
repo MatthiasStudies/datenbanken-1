@@ -149,8 +149,6 @@ public class Main {
             formatter.printTable("kunde", FmtOptions.highlight(Where.column("nr").is(customerId)));
             formatter.printTable("auftrag", FmtOptions.highlight(Where.column("auftrnr").is(orderId)));
             formatter.printTable("auftragsposten", FmtOptions.highlight(Where.column("auftrnr").is(orderId)));
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,7 +162,7 @@ public class Main {
         System.out.println("-- Initialized successfully --\n");
 
 //        exercise4_2(conn);
-        exercise4_3(conn, "Rafa");
-//        exercise4_4(conn);
+//        exercise4_3(conn, "Rafa");
+        exercise4_4(conn);
     }
 }

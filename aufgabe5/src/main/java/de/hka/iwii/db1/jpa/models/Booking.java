@@ -14,7 +14,7 @@ public class Booking {
     @Min(1)
     int numberOfSeats;
 
-    @NotNull  @Temporal(TemporalType.TIME)
+    @NotNull @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime date;
 
     @ManyToOne

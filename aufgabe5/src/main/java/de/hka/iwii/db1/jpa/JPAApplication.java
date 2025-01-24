@@ -104,6 +104,6 @@ public class JPAApplication {
 	public static void main(String[] args) {
 		JPAApplication app = new JPAApplication();
 		app.createData();
-		app.printBookings("Doe");
+		app.printBookings("Does");
 	}
 }

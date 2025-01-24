@@ -13,7 +13,7 @@ public class Flight {
     @Id @NotNull
     String nr;
 
-    @NotNull @Temporal(TemporalType.TIME)
+    @NotNull @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime takeOff;
 
     @NotNull
